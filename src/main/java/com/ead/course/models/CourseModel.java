@@ -6,6 +6,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -52,8 +56,10 @@ public class CourseModel implements Serializable {
 
 
     //RELACIONAMENTO DAS ENTIDADES (1COURSE PARA VARIOS MODULE)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // acesso apenas para escritas
-    @OneToMany(mappedBy = "course")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // ACESSO APENAS PARA ESCRITAS
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    @Fetch(FetchMode.SUBSELECT)  //  SUBSELECT NAO IRA INTERFERIR NO FetchType.LAZY
+//  @OnDelete(action = OnDeleteAction.CASCADE) // SEMPRE QUE DELETAR UM CURSO OS MODULOS TAMBEM SERÃO DELETADOS
     private Set<ModuleModel> modules;
 
 
