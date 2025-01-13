@@ -19,6 +19,6 @@ public interface ModuleRepository extends JpaRepository<ModuleModel, UUID> {
 //    ModuleModel findAllByTitle(String title);
 
     @Modifying
-    @Query(value = "select * from tb_modules where course_course_id = ;courseId" , nativeQuery = true)
+    @Query(value = "select * from tb_modules where course_course_id = :courseId", nativeQuery = true)
     List<ModuleModel> findAllByModulesIntoCourse(@Param("courseId") UUID courseId);
 }

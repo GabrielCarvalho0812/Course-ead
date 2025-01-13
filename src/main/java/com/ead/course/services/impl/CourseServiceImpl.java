@@ -67,11 +67,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Optional<CourseModel> findById(UUID coursesId) {
-        Optional<CourseModel> courseModelOptional = courseRepository.findById(coursesId);
-        if (courseModelOptional.isEmpty()) {
-            // lançar exeção
+    public Optional<CourseModel> findById(UUID courseId) {
+        Optional<CourseModel> courseModelOptional = courseRepository.findById(courseId);
+        if (courseModelOptional.isEmpty()){
+            //lancar execao
         }
         return courseModelOptional;
     }
+
 }

@@ -38,11 +38,16 @@ public class CourseController {
     }
 
     @GetMapping("/{courseId}")
-    public ResponseEntity<Object> getOneCourse(@PathVariable("courseId") UUID coursesId){
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.findById(coursesId).get());
+    public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId") UUID courseId){
+        return ResponseEntity.status(HttpStatus.OK).body(courseService.findById(courseId).get());
 
     }
 
+    @DeleteMapping("/{courseId}")
+    public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId") UUID courseId){
+        courseService.delete(courseService.findById(courseId).get());
+        return ResponseEntity.status(HttpStatus.OK).body("Course deleted successfully");
 
+    }
 
 }
