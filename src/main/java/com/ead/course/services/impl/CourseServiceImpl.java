@@ -75,4 +75,11 @@ public class CourseServiceImpl implements CourseService {
         return courseModelOptional;
     }
 
+    @Override
+    public CourseModel update(CourseRecordDto courseRecordDto, CourseModel courseModel) {
+        BeanUtils.copyProperties(courseRecordDto, courseModel); //fazendo a conversão de DTO para Model
+        courseModel.setLastUpdateDate(LocalDateTime.now(ZoneId.of("UTC"))); // mudar a data de ultima atualização
+         return courseRepository.save(courseModel);
+    }
+
 }

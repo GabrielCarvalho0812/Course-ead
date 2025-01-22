@@ -2,6 +2,7 @@ package com.ead.course.services;
 
 import com.ead.course.dtos.CourseRecordDto;
 import com.ead.course.models.CourseModel;
+import jakarta.validation.Valid;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,5 +20,5 @@ public interface CourseService {
 
     Optional<CourseModel> findById(UUID courseId);
 
-
+    CourseModel update(CourseRecordDto courseRecordDto, CourseModel courseModel);
 }
