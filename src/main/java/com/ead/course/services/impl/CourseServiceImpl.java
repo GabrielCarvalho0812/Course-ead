@@ -34,7 +34,7 @@ public class CourseServiceImpl implements CourseService {
     @Transactional // para garantir que todos esses processos sejam realizados ,para que naõ fique pela metade
     @Override
     public void delete(CourseModel courseModel) {
-        List<ModuleModel> moduleModelList = moduleRepository.findAllByModulesIntoCourse(courseModel.getCourseId());
+        List<ModuleModel> moduleModelList = moduleRepository.findAllModulesIntoCourse(courseModel.getCourseId());
         if (!moduleModelList.isEmpty()){ //si ela esta vazia
             for (ModuleModel module : moduleModelList) { // se ela não estiver vazia
                 List<LessonModel> lessonModelList = lessonRepository.findAllLessonsIntoModule(module.getModuleId());

@@ -9,6 +9,7 @@ import org.hibernate.annotations.FetchMode;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
@@ -30,7 +31,7 @@ public class ModuleModel implements Serializable {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(nullable = false)
-    private LocalDate createDate;
+    private LocalDateTime creationDate;
 
 
     // RELACIONAMENTO DAS ENTIDADES (VARIOS MODULE PARA 1 CURSO)
@@ -70,12 +71,12 @@ public class ModuleModel implements Serializable {
         this.description = description;
     }
 
-    public LocalDate getCreateDate() {
-        return createDate;
+    public LocalDateTime getCreateDate() {
+        return creationDate;
     }
 
-    public void setCreateDate(LocalDate createDate) {
-        this.createDate = createDate;
+    public void setCreationDate(LocalDateTime creationDate) {
+        this.creationDate = creationDate;
     }
 
     public CourseModel getCourse() {

@@ -1,13 +1,19 @@
 package com.ead.course.services.impl;
 
+import com.ead.course.dtos.ModuleRecordDto;
+import com.ead.course.models.CourseModel;
 import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
 import com.ead.course.repositories.LessonRepository;
 import com.ead.course.repositories.ModuleRepository;
 import com.ead.course.services.ModuleService;
 import jakarta.transaction.Transactional;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 @Service
@@ -30,5 +36,14 @@ public class ModuleServiceImpl implements ModuleService {
             lessonRepository.deleteAll(lessonModelList);
         }
         moduleRepository.delete(moduleModel);
+    }
+
+    @Override
+    public ModuleModel save(ModuleRecordDto moduleRecordDto, CourseModel courseModel) {
+        var moduleModel = new ModuleModel();
+        BeanUtils.copyProperties(moduleRecordDto, moduleModel); //fazendo a conversão de dto para model
+        moduleModel.setCreationDate(LocalDateTime.now(ZoneId.of("UTC")));
+        moduleModel.setCourse(courseModel);
+        return moduleRepository.save(moduleModel);
     }
 }
