@@ -39,7 +39,6 @@ public class CourseController {
     @GetMapping("/{courseId}")
     public ResponseEntity<Object> getOneCourse(@PathVariable(value = "courseId") UUID courseId){
         return ResponseEntity.status(HttpStatus.OK).body(courseService.findById(courseId).get());
-
     }
 
     @DeleteMapping("/{courseId}")
@@ -55,5 +54,6 @@ public class CourseController {
         return ResponseEntity.status(HttpStatus.OK).body(courseService.update(courseRecordDto, courseService.findById(courseId).get()));
 
     }
+
 
 }
