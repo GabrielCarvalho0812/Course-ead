@@ -15,9 +15,9 @@ public interface ModuleService {
 
     ModuleModel save( ModuleRecordDto moduleRecordDto, CourseModel courseModel);
 
-    List<ModuleModel> findAllModulesIntoCourse(UUID courseId);
+    List<ModuleModel> findAllModulesIntoCourse(UUID courseId); //encontrar todos os Modules dentro de um curso
 
-    Optional<ModuleModel> findModuleIntoCourse(UUID courseId, UUID moduleId);
+    Optional<ModuleModel> findModuleIntoCourse(UUID courseId, UUID moduleId); //encontrar um Module dentro de um Course
 
     ModuleModel update(ModuleRecordDto moduleRecordDto, ModuleModel moduleModel);
 
