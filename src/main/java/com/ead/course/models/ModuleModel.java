@@ -71,7 +71,7 @@ public class ModuleModel implements Serializable {
         this.description = description;
     }
 
-    public LocalDateTime getCreateDate() {
+    public LocalDateTime getCreationDate() {
         return creationDate;
     }
 

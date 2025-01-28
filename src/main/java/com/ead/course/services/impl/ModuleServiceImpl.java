@@ -70,4 +70,13 @@ public class ModuleServiceImpl implements ModuleService {
         return moduleRepository.save(moduleModel);
     }
 
+    @Override
+    public Optional<ModuleModel> findById(UUID moduleId) {
+        Optional<ModuleModel> moduleModelOptional = moduleRepository.findById(moduleId);
+        if (moduleModelOptional.isEmpty()){
+            //lançar exepion
+        }
+        return moduleModelOptional;
+    }
+
 }
