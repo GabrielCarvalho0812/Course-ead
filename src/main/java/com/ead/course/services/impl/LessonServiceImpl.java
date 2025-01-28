@@ -47,4 +47,9 @@ public class LessonServiceImpl implements LessonService {
         return lessonModelOptional;
     }
 
+    @Override
+    public void delete(LessonModel lessonModel) {
+        lessonRepository.delete(lessonModel);
+    }
+
 }
