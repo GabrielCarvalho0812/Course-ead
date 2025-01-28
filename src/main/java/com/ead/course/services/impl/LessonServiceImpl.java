@@ -52,4 +52,10 @@ public class LessonServiceImpl implements LessonService {
         lessonRepository.delete(lessonModel);
     }
 
+    @Override
+    public Object update(LessonRecordDto lessonRecordDto, LessonModel lessonModel) {
+        BeanUtils.copyProperties(lessonRecordDto, lessonModel);
+        return lessonRepository.save(lessonModel);
+    }
+
 }
