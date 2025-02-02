@@ -1,6 +1,7 @@
 package com.ead.course.services.impl;
 
 import com.ead.course.dtos.CourseRecordDto;
+import com.ead.course.exceptions.NotFoundException;
 import com.ead.course.models.CourseModel;
 import com.ead.course.models.LessonModel;
 import com.ead.course.models.ModuleModel;
@@ -31,7 +32,7 @@ public class CourseServiceImpl implements CourseService {
         this.lessonRepository = lessonRepository;
     }
 
-    @Transactional // para garantir que todos esses processos sejam realizados ,para que naõ fique pela metade
+    @Transactional // rouback para garantir que todos esses processos sejam realizados ,para que naõ fique pela metade
     @Override
     public void delete(CourseModel courseModel) {
         List<ModuleModel> moduleModelList = moduleRepository.findAllModulesIntoCourse(courseModel.getCourseId());
@@ -70,7 +71,7 @@ public class CourseServiceImpl implements CourseService {
     public Optional<CourseModel> findById(UUID courseId) {
         Optional<CourseModel> courseModelOptional = courseRepository.findById(courseId);
         if (courseModelOptional.isEmpty()){
-            //lancar execao
+            throw new NotFoundException("Error: Course not found");
         }
         return courseModelOptional;
     }

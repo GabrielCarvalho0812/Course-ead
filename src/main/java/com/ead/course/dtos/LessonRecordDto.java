@@ -2,9 +2,12 @@ package com.ead.course.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 
-public record LessonRecordDto(@NotBlank String title,
+public record LessonRecordDto(@NotBlank(message = "Title is mandatory")
+                              String title,
 
-                              @NotBlank String description,
+                              @NotBlank(message = "Description is mandatory")
+                              String description,
 
-                              @NotBlank String videoUrl) {
+                              @NotBlank(message = "VideoUrl is mandatory")
+                              String videoUrl) {
 }

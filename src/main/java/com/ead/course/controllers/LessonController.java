@@ -33,7 +33,6 @@ public class LessonController {
 
     @GetMapping("/modules/{moduleId}/lessons")
     public ResponseEntity<List<LessonModel>> getAllLessons(@PathVariable(value = "moduleId")UUID moduleId){
-
         return ResponseEntity.status(HttpStatus.OK).body(lessonService.findAllLessonsIntoModule(moduleId));
     }
 
