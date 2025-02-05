@@ -14,7 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface LessonRepository extends JpaRepository<LessonModel, UUID>, JpaSpecificationExecutor<CourseModel> {
+public interface LessonRepository extends JpaRepository<LessonModel, UUID>, JpaSpecificationExecutor<LessonModel> {
 
     @Query(value="select * from tb_lessons where module_module_id = :moduleId", nativeQuery = true)
     List<LessonModel> findAllLessonsIntoModule(@Param("moduleId") UUID moduleId);
