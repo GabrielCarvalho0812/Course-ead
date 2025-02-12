@@ -6,6 +6,8 @@ import com.ead.course.services.CourseService;
 import com.ead.course.specifications.SpecificationTemplate;
 import jakarta.validation.Valid;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,8 @@ import java.util.UUID;
 @RequestMapping("/courses")
 public class CourseController {
 
+    Logger logger = LogManager.getLogger(CourseController.class);
+
     final CourseService courseService;
 
     public CourseController(CourseService courseService) {
@@ -28,7 +32,9 @@ public class CourseController {
 
     @PostMapping
     public ResponseEntity<Object> saveCourse(@RequestBody @Valid CourseRecordDto courseRecordDto){
+        logger.debug("POST saveCourse courseRecordDto received {} ", courseRecordDto);
         if (courseService.existsByName(courseRecordDto.name())){
+            logger.warn("Course Name {} is Already Taken ", courseRecordDto.name());
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Course already exists");
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(courseService.save(courseRecordDto));
@@ -47,6 +53,7 @@ public class CourseController {
 
     @DeleteMapping("/{courseId}")
     public ResponseEntity<Object> deleteCourse(@PathVariable(value = "courseId") UUID courseId){
+        logger.debug("DELETE deleteCourse courseId received {} ", courseId);
         courseService.delete(courseService.findById(courseId).get());
         return ResponseEntity.status(HttpStatus.OK).body("Course deleted successfully");
 
@@ -55,7 +62,9 @@ public class CourseController {
     @PutMapping("/{courseId}")
     public ResponseEntity<Object> updateCourse (@PathVariable(value = "courseId") UUID courseId,
                                                 @RequestBody @Valid CourseRecordDto courseRecordDto){
-        return ResponseEntity.status(HttpStatus.OK).body(courseService.update(courseRecordDto, courseService.findById(courseId).get()));
+        logger.debug("PUT updateCourse courseRecordDto received {} ", courseRecordDto);
+        return ResponseEntity.status(HttpStatus.OK).body
+                (courseService.update(courseRecordDto, courseService.findById(courseId).get()));
 
     }
 
