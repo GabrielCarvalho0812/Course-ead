@@ -60,6 +60,10 @@ public class CourseModel implements Serializable {
 //  @OnDelete(action = OnDeleteAction.CASCADE) // SEMPRE QUE DELETAR UM CURSO OS MODULOS TAMBEM SERÃO DELETADOS
     private Set<ModuleModel> modules;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+    private Set<CourseUserModel> courseUsers;
+
 
 
     public UUID getCourseId() {
@@ -142,5 +146,11 @@ public class CourseModel implements Serializable {
         this.modules = modules;
     }
 
+    public Set<CourseUserModel> getCourseUsers() {
+        return courseUsers;
+    }
 
+    public void setCourseUsers(Set<CourseUserModel> courseUsers) {
+        this.courseUsers = courseUsers;
+    }
 }
