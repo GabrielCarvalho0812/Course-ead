@@ -62,7 +62,7 @@ public class CourseModel implements Serializable {
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-    private Set<CourseUserModel> courseUsers;
+    private Set<CourseUserModel> coursesUsers;
 
 
 
@@ -146,11 +146,11 @@ public class CourseModel implements Serializable {
         this.modules = modules;
     }
 
-    public Set<CourseUserModel> getCourseUsers() {
-        return courseUsers;
+    public Set<CourseUserModel> getCoursesUsers() {
+        return coursesUsers;
     }
 
-    public void setCourseUsers(Set<CourseUserModel> courseUsers) {
-        this.courseUsers = courseUsers;
+    public void setCoursesUsers(Set<CourseUserModel> courseUsers) {
+        this.coursesUsers = courseUsers;
     }
 }
