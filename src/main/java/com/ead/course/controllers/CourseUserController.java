@@ -3,6 +3,7 @@ package com.ead.course.controllers;
 import com.ead.course.clients.AuthUserClient;
 import com.ead.course.dtos.SubscriptionRecordDto;
 import com.ead.course.dtos.UserRecordDto;
+import com.ead.course.enums.UserStatus;
 import com.ead.course.models.CourseModel;
 import com.ead.course.models.CourseUserModel;
 import com.ead.course.services.CourseService;
@@ -46,6 +47,16 @@ public class CourseUserController {
         if(courseUserService.existsByCourseAndUserId(courseModelOptional.get(), subscriptionRecordDto.userId())){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Subscription already exists");
         }
+
+
+        //se o status do Usuario for BLOCKED
+        ResponseEntity<UserRecordDto> responseUser = authUserClient.getOneUserById(subscriptionRecordDto.userId());
+        if (responseUser.getBody().userStatus().equals(UserStatus.BLOCKED)){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("User is blocked");
+
+        }
+
+
 
         CourseUserModel courseUserModel =
                 courseUserService.saveAndSendSubscriptionUserInCourse(courseModelOptional.get().convertToCourseUserModel(subscriptionRecordDto.userId()));
