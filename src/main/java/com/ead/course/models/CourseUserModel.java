@@ -12,6 +12,12 @@ import java.util.UUID;
 public class CourseUserModel implements Serializable {
     private static final long serialVersionUID = 1L;
 
+    public CourseUserModel(UUID id, UUID userId, CourseModel course) {
+        this.id = id;
+        this.userId = userId;
+        this.course = course;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
@@ -21,6 +27,10 @@ public class CourseUserModel implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     private CourseModel course;
+
+    public CourseUserModel() {
+
+    }
 
 
     public UUID getId() {
