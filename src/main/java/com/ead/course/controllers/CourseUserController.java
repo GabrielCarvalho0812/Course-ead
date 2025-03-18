@@ -48,16 +48,13 @@ public class CourseUserController {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("Subscription already exists");
         }
 
-
         //se o status do Usuario for BLOCKED
         ResponseEntity<UserRecordDto> responseUser = authUserClient.getOneUserById(subscriptionRecordDto.userId());
         if (responseUser.getBody().userStatus().equals(UserStatus.BLOCKED)){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("User is blocked");
-
         }
 
-
-
+        //oque precisa salvar na base é um CourseUserModel
         CourseUserModel courseUserModel =
                 courseUserService.saveAndSendSubscriptionUserInCourse(courseModelOptional.get().convertToCourseUserModel(subscriptionRecordDto.userId()));
         return ResponseEntity.status(HttpStatus.CREATED).body(courseUserModel);
