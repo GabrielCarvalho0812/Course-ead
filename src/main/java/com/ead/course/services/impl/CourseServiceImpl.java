@@ -1,5 +1,6 @@
 package com.ead.course.services.impl;
 
+import com.ead.course.clients.AuthUserClient;
 import com.ead.course.dtos.CourseRecordDto;
 import com.ead.course.exceptions.NotFoundException;
 import com.ead.course.models.CourseModel;
@@ -32,17 +33,20 @@ public class CourseServiceImpl implements CourseService {
     final ModuleRepository moduleRepository;
     final LessonRepository lessonRepository;
     final CourseUserRepository courseUserRepository;
+    final AuthUserClient authUserClient;
 
-    public CourseServiceImpl(CourseRepository courseRepository, ModuleRepository moduleRepository, LessonRepository lessonRepository, CourseUserRepository courseUserRepository) {
+    public CourseServiceImpl(CourseRepository courseRepository, ModuleRepository moduleRepository, LessonRepository lessonRepository, CourseUserRepository courseUserRepository, AuthUserClient authUserClient) {
         this.courseRepository = courseRepository;
         this.moduleRepository = moduleRepository;
         this.lessonRepository = lessonRepository;
         this.courseUserRepository = courseUserRepository;
+        this.authUserClient = authUserClient;
     }
 
     @Transactional // rouback para garantir que todos esses processos sejam realizados ,para que naõ fique pela metade
     @Override
     public void delete(CourseModel courseModel) {
+        boolean deleteCourseUserInAuthuser = false;
         List<ModuleModel> moduleModelList = moduleRepository.findAllModulesIntoCourse(courseModel.getCourseId());
         if (!moduleModelList.isEmpty()){ //si ela esta vazia
             for (ModuleModel module : moduleModelList) { // se ela não estiver vazia
@@ -59,8 +63,12 @@ public class CourseServiceImpl implements CourseService {
 
         if (!courseUserModelList.isEmpty()){
             courseUserRepository.deleteAll(courseUserModelList);
+            deleteCourseUserInAuthuser = true;
         }
         courseRepository.delete(courseModel);
+        if (deleteCourseUserInAuthuser){
+            authUserClient.deleteCourseUserInAuthuser(courseModel.getCourseId());
+        }
     }
 
     @Override
