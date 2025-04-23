@@ -2,7 +2,6 @@ package com.ead.course.models;
 
 import com.ead.course.enums.CourseLevel;
 import com.ead.course.enums.CourseStatus;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
@@ -59,14 +58,6 @@ public class CourseModel implements Serializable {
     @Fetch(FetchMode.SUBSELECT)  //  SUBSELECT NAO IRA INTERFERIR NO FetchType.LAZY
 //  @OnDelete(action = OnDeleteAction.CASCADE) // SEMPRE QUE DELETAR UM CURSO OS MODULOS TAMBEM SERÃO DELETADOS
     private Set<ModuleModel> modules;
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-    private Set<CourseUserModel> coursesUsers;
-
-    public CourseUserModel convertToCourseUserModel(UUID userId) {
-        return new CourseUserModel(null, userId, this);
-    }
 
 
 
@@ -150,11 +141,4 @@ public class CourseModel implements Serializable {
         this.modules = modules;
     }
 
-    public Set<CourseUserModel> getCoursesUsers() {
-        return coursesUsers;
-    }
-
-    public void setCoursesUsers(Set<CourseUserModel> courseUsers) {
-        this.coursesUsers = courseUsers;
-    }
 }
