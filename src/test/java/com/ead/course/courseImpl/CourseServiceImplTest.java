@@ -18,6 +18,7 @@ import java.util.UUID;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -93,6 +94,21 @@ public class CourseServiceImplTest {
         assertNotNull(result);
         assertEquals(dto.name(), result.getName());
         verify(courseRepository).save(any(CourseModel.class));
+    }
+
+    @Test
+    void deveRetornarTrueQuandoNomeDoCursoJaExiste(){
+        String nomeCurso = "Curso completo de Java";
+
+        when(courseRepository.existsByName(nomeCurso)).thenReturn(true);
+
+         Boolean existe =  courseService.existsByName(nomeCurso);
+
+        assertTrue(existe);
+        verify(courseRepository).existsByName(nomeCurso);
+
+
+
     }
 
 
