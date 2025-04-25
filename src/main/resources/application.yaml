@@ -23,6 +23,9 @@ spring:
     ansi:
       enabled: Always
 
+  rabbitmq:
+    addresses: amqps://fgiejfrc:sgtzUT7AQB_VS5EhOD8bjJeJdA1DruFt@leopard.lmq.cloudamqp.com/fgiejfrc
+
 ead:
   api:
     url:
