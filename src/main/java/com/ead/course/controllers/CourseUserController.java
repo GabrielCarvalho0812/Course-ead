@@ -3,6 +3,8 @@ package com.ead.course.controllers;
 import com.ead.course.dtos.SubscriptionRecordDto;
 import com.ead.course.models.CourseModel;
 import com.ead.course.services.CourseService;
+import com.ead.course.services.UserService;
+import com.ead.course.specifications.SpecificationTemplate;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,19 +20,23 @@ import java.util.UUID;
 public class CourseUserController {
 
 
-    private final CourseService courseService;
+     final CourseService courseService;
+     final UserService userService;
 
 
-    public CourseUserController( CourseService courseService) {
+    public CourseUserController( CourseService courseService, UserService userService) {
         this.courseService = courseService;
+        this.userService = userService;
     }
 
     // traga todos os usuarios relacionados a um determinado course
     @GetMapping("/courses/{courseId}/users")
-    public ResponseEntity<Object> getAllUserByCourse(@PageableDefault(sort = "userId", direction = Sort.Direction.ASC) Pageable pageable,
-                                                                   @PathVariable(value = "courseId") UUID courseId){
+    public ResponseEntity<Object> getAllUserByCourse(SpecificationTemplate.UserSpec spec,
+                                                     @PageableDefault(sort = "userId", direction = Sort.Direction.ASC) Pageable pageable,
+                                                     @PathVariable(value = "courseId") UUID courseId){
         courseService.findById(courseId);
-        return ResponseEntity.status(HttpStatus.OK).body(" ");//fazer rafatoração
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userService.findAll(SpecificationTemplate.userCourseId(courseId) .and(spec), pageable));
     }
 
     @PostMapping("/courses/{courseId}/users/subscription")
