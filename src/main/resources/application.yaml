@@ -24,12 +24,20 @@ spring:
       enabled: Always
 
   rabbitmq:
-    addresses: amqps://fgiejfrc:sgtzUT7AQB_VS5EhOD8bjJeJdA1DruFt@leopard.lmq.cloudamqp.com/fgiejfrc
+    addresses: amqps://fgiejfrc:EeDBSevNNH-LnT-XqwTkT2IgOgOmc0Kd@leopard.lmq.cloudamqp.com/fgiejfrc
 
 ead:
   api:
     url:
       authuser: 'http://ead-authuser-service/ead-authuser'
+  broker:
+    exchange:
+      userEventExchange: ead.userevent
+    queue:
+      userEventQueue:
+        name: ead.userevent.ms.course # o consumo que vai receber essa msg vai ser o course(eventos de Usuarios)
+
+
 
 logging:
   level:

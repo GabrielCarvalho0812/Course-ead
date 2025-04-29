@@ -15,7 +15,7 @@ public class UserModel  implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private UUID id;
+    private UUID userId;
 
     @Column(unique = true, nullable = false, length = 50)
     private String email;
@@ -38,12 +38,12 @@ public class UserModel  implements Serializable {
     private Set<CourseModel> courses;
 
 
-    public UUID getId() {
-        return id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {
@@ -93,4 +93,5 @@ public class UserModel  implements Serializable {
     public void setCourses(Set<CourseModel> courses) {
         this.courses = courses;
     }
+
 }
