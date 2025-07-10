@@ -1,54 +1,61 @@
-server:
-  port: 8082
-  servlet:
-    context-path: '/ead-course/'
-
+#server:
+#  port: 8082
+#  servlet:
+#    context-path: '/ead-course/'
+#
 spring:
   application:
     name: ead-course-service
-  datasource:
-    url:  jdbc:postgresql://localhost:5432/ead-course-v2
-    username: postgres
-    password: 1234567
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show_sql: true
-    properties:
-      hibernate:
-        jdbc:
-          lob:
-            non-contextual-creation: true
-  output:
-    ansi:
-      enabled: Always
+  config:
+    import: 'configserver:'
+  cloud:
+    config:
+      discovery:
+        serviceId: ead:config:server
 
-  rabbitmq:
-    addresses: amqps://fgiejfrc:EeDBSevNNH-LnT-XqwTkT2IgOgOmc0Kd@leopard.lmq.cloudamqp.com/fgiejfrc
-
-ead:
-  api:
-    url:
-      authuser: 'http://ead-authuser-service/ead-authuser'
-  broker:
-    exchange:
-      userEventExchange: ead.userevent
-    queue:
-      userEventQueue:
-        name: ead.userevent.ms.course # o consumo que vai receber essa msg vai ser o course(eventos de Usuarios)
-
-
-
-logging:
-  level:
-    com.ead: TRACE
-    root: INFO
-    org.springframework.web: DEBUG
-    org.hibernate: INFO
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: 'http://localhost:8761/eureka'
-  instance:
-    hostname: localhost
+#  datasource:
+#    url:  jdbc:postgresql://localhost:5432/ead-course-v2
+#    username: postgres
+#    password: 1234567
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#    show_sql: true
+#    properties:
+#      hibernate:
+#        jdbc:
+#          lob:
+#            non-contextual-creation: true
+#  output:
+#    ansi:
+#      enabled: Always
+#
+#  rabbitmq:
+#    addresses: amqps://fgiejfrc:EeDBSevNNH-LnT-XqwTkT2IgOgOmc0Kd@leopard.lmq.cloudamqp.com/fgiejfrc
+#
+#ead:
+#  api:
+#    url:
+#      authuser: 'http://ead-authuser-service/ead-authuser'
+#  broker:
+#    exchange:
+#      userEventExchange: ead.userevent
+#    queue:
+#      userEventQueue:
+#        name: ead.userevent.ms.course # o consumo que vai receber essa msg vai ser o course(eventos de Usuarios)
+#
+#
+#
+#logging:
+#  level:
+#    com.ead: TRACE
+#    root: INFO
+#    org.springframework.web: DEBUG
+#    org.hibernate: INFO
+#
+#eureka:
+#  client:
+#    serviceUrl:
+#      defaultZone: 'http://localhost:8761/eureka'
+#  instance:
+#    hostname: localhost
